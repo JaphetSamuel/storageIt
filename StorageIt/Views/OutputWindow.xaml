@@ -1,0 +1,14 @@
+<Window x:Class="StorageIt.Views.OutputWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Command output" Width="720" Height="420" WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <Grid Margin="14">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBox x:Name="Box" IsReadOnly="True" FontFamily="Cascadia Mono, Consolas" FontSize="12.5"
+                 VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" TextWrapping="NoWrap" />
+        <Button Grid.Row="1" Content="Close" IsCancel="True" IsDefault="True" HorizontalAlignment="Right" Padding="20,5" Margin="0,12,0,0" />
+    </Grid>
+</Window>

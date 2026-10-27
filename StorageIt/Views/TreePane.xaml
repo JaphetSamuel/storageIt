@@ -1,0 +1,74 @@
+<UserControl x:Class="StorageIt.Views.TreePane"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ListView x:Name="List"
+              SelectionMode="Extended"
+              VirtualizingPanel.IsVirtualizing="True"
+              VirtualizingPanel.VirtualizationMode="Recycling"
+              ScrollViewer.CanContentScroll="True"
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              BorderThickness="0"
+              SelectionChanged="List_SelectionChanged"
+              PreviewMouseRightButtonDown="List_PreviewMouseRightButtonDown"
+              ContextMenuOpening="List_ContextMenuOpening"
+              MouseDoubleClick="List_MouseDoubleClick"
+              PreviewKeyDown="List_PreviewKeyDown">
+        <ListView.ItemContainerStyle>
+            <StaticResource ResourceKey="GridRowStyle" />
+        </ListView.ItemContainerStyle>
+        <ListView.View>
+            <GridView>
+                <GridViewColumn Header="Name" Width="226">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" Margin="{Binding Indent}">
+                                <TextBlock Text="{Binding ExpanderGlyph}" FontFamily="{StaticResource IconFont}" FontSize="10"
+                                           Width="18" VerticalAlignment="Center" TextAlignment="Center"
+                                           Opacity="0.75" Background="Transparent"
+                                           MouseLeftButtonDown="Expander_MouseLeftButtonDown" />
+                                <Border Width="10" Height="10" CornerRadius="2" Margin="0,0,6,0" VerticalAlignment="Center"
+                                        Background="{Binding Swatch}" Visibility="{Binding SwatchVisibility}" />
+                                <TextBlock Text="&#xE8B7;" FontFamily="{StaticResource IconFont}" FontSize="13" Margin="0,0,6,0"
+                                           VerticalAlignment="Center" Foreground="#E8B04A" Visibility="{Binding FolderVisibility}" />
+                                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"
+                                           FontStyle="{Binding NameStyle}" Opacity="{Binding NameOpacity}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Size" Width="74">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding SizeText}" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Share" Width="112">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid Margin="2,0,6,0" VerticalAlignment="Center" Height="16" Visibility="{Binding BarVisibility}">
+                                <Border Background="#33808080" CornerRadius="3" />
+                                <Border Background="#4C8BF5" CornerRadius="3" HorizontalAlignment="Left" Width="{Binding BarWidth}" Opacity="0.85" />
+                                <TextBlock Text="{Binding PercentText}" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </Grid>
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Files" Width="88">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding FilesText}" TextAlignment="Right" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+                <GridViewColumn Header="Modified" Width="130">
+                    <GridViewColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding ModifiedText}" VerticalAlignment="Center" Opacity="0.8" />
+                        </DataTemplate>
+                    </GridViewColumn.CellTemplate>
+                </GridViewColumn>
+            </GridView>
+        </ListView.View>
+    </ListView>
+</UserControl>

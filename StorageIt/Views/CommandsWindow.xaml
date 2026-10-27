@@ -1,0 +1,85 @@
+<Window x:Class="StorageIt.Views.CommandsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Cleanup commands" Width="820" Height="600" MinWidth="700" MinHeight="520"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <Grid Margin="18">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="230" />
+            <ColumnDefinition Width="18" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- list of commands -->
+        <DockPanel Grid.Column="0">
+            <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="0,8,0,0">
+                <Button Content="Add" Click="Add_Click" Padding="14,4" Margin="0,0,6,0" />
+                <Button Content="Duplicate" Click="Duplicate_Click" Padding="10,4" Margin="0,0,6,0" />
+                <Button Content="Remove" Click="Remove_Click" Padding="10,4" />
+            </StackPanel>
+            <ListBox x:Name="CommandList" DisplayMemberPath="Name" SelectionChanged="CommandList_SelectionChanged" />
+        </DockPanel>
+
+        <!-- editor -->
+        <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="Editor" IsEnabled="False">
+                <TextBlock Text="Name" Margin="0,0,0,3" />
+                <TextBox x:Name="NameBox" TextChanged="Field_Changed" Margin="0,0,0,10" />
+
+                <TextBlock Text="Program" Margin="0,0,0,3" />
+                <DockPanel Margin="0,0,0,10">
+                    <Button DockPanel.Dock="Right" Content="Browse…" Click="Browse_Click" Padding="10,4" Margin="6,0,0,0" />
+                    <TextBox x:Name="ProgramBox" TextChanged="Field_Changed" />
+                </DockPanel>
+
+                <TextBlock Text="Arguments" Margin="0,0,0,3" />
+                <TextBox x:Name="ArgsBox" TextChanged="Field_Changed" AcceptsReturn="False" Margin="0,0,0,4" FontFamily="Cascadia Mono, Consolas" />
+                <TextBlock TextWrapping="Wrap" FontSize="12" Opacity="0.75" Margin="0,0,0,12">
+                    <Run Text="Placeholders:" FontWeight="SemiBold" />
+                    <Run Text="{}{path}  {name}  {nameNoExt}  {ext}  {dir}  {folder}  {drive}  {paths}" FontFamily="Cascadia Mono, Consolas" />
+                    <LineBreak />
+                    <Run Text="{}{dir} is the folder that contains the item; {folder} is the item itself when it is a folder. {paths} lists every selected item, each in quotes. Put quotes around the other placeholders if paths may contain spaces." />
+                </TextBlock>
+
+                <Grid Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="14" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel>
+                        <TextBlock Text="Show in menu for" Margin="0,0,0,3" />
+                        <ComboBox x:Name="TargetBox" SelectionChanged="Field_Changed">
+                            <ComboBoxItem Content="Files and folders" />
+                            <ComboBoxItem Content="Files only" />
+                            <ComboBoxItem Content="Folders only" />
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2">
+                        <TextBlock Text="When it runs" Margin="0,0,0,3" />
+                        <ComboBox x:Name="ModeBox" SelectionChanged="Field_Changed">
+                            <ComboBoxItem Content="Start normally (program opens its own window)" />
+                            <ComboBoxItem Content="Run hidden and show the output" />
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <CheckBox x:Name="PerItemBox" Content="With several items selected, run once for each item" Checked="Field_Changed" Unchecked="Field_Changed" Margin="0,0,0,6" />
+                <CheckBox x:Name="ConfirmBox" Content="Ask before running" Checked="Field_Changed" Unchecked="Field_Changed" Margin="0,0,0,6" />
+                <CheckBox x:Name="RescanBox" Content="Scan again afterwards (for commands that delete or move files)" Checked="Field_Changed" Unchecked="Field_Changed" />
+            </StackPanel>
+        </ScrollViewer>
+
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="3" Margin="0,16,0,0">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                <Button Content="Save" IsDefault="True" Click="Save_Click" Padding="24,5" Margin="0,0,8,0" />
+                <Button Content="Cancel" IsCancel="True" Padding="16,5" />
+            </StackPanel>
+            <TextBlock Text="Commands appear under “Cleanup commands” in every right-click menu." Opacity="0.65" VerticalAlignment="Center" />
+        </DockPanel>
+    </Grid>
+</Window>

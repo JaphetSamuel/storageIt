@@ -1,0 +1,91 @@
+<UserControl x:Class="StorageIt.Views.ExtensionsPane"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" MinHeight="120" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" MinHeight="100" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <ListView x:Name="ExtList" SelectionMode="Single" BorderThickness="0"
+                      VirtualizingPanel.IsVirtualizing="True" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      SelectionChanged="ExtList_SelectionChanged">
+                <ListView.ItemContainerStyle>
+                    <StaticResource ResourceKey="GridRowStyle" />
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="File type" Width="170">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="6,0,0,0">
+                                        <Border Width="12" Height="12" CornerRadius="3" Margin="0,0,8,0" VerticalAlignment="Center" Background="{Binding Swatch}" />
+                                        <TextBlock Text="{Binding Stat.Label}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Size" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding SizeText}" TextAlignment="Right" Margin="0,0,6,0" VerticalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Share" Width="130">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="2,0,6,0" Height="16" VerticalAlignment="Center">
+                                        <Border Background="#33808080" CornerRadius="3" />
+                                        <Border Background="{Binding Swatch}" CornerRadius="3" HorizontalAlignment="Left" Width="{Binding BarWidth}" />
+                                        <TextBlock Text="{Binding PercentText}" FontSize="11" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Files" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding CountText}" TextAlignment="Right" Margin="0,0,6,0" VerticalAlignment="Center" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+            <TextBlock x:Name="Placeholder" Text="Scan something to see which file types use the most space."
+                       HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center"
+                       Margin="24" Opacity="0.6" />
+        </Grid>
+
+        <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" Background="Transparent" />
+
+        <DockPanel Grid.Row="2">
+            <TextBlock x:Name="FilesHeader" DockPanel.Dock="Top" Margin="8,4,8,4" FontWeight="SemiBold" Text="Largest files of the selected type" />
+            <ListView x:Name="FileList" SelectionMode="Extended" BorderThickness="0" ItemContainerStyle="{StaticResource GridRowStyle}"
+                      VirtualizingPanel.IsVirtualizing="True" ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                      SelectionChanged="FileList_SelectionChanged"
+                      PreviewMouseRightButtonDown="FileList_PreviewMouseRightButtonDown"
+                      ContextMenuOpening="FileList_ContextMenuOpening"
+                      MouseDoubleClick="FileList_MouseDoubleClick"
+                      PreviewKeyDown="FileList_PreviewKeyDown">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="Size" Width="80">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding SizeText}" TextAlignment="Right" Margin="0,0,6,0" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Folder" Width="320" DisplayMemberBinding="{Binding Folder}" />
+                        <GridViewColumn Header="Modified" Width="130" DisplayMemberBinding="{Binding ModifiedText}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+    </Grid>
+</UserControl>
